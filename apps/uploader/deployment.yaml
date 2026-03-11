@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: uploader
+  namespace: prod
+  labels:
+    app: uploader
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: uploader
+  template:
+    metadata:
+      labels:
+        app: uploader
+    spec:
+      containers:
+        - name: uploader
+          image: ynoacamino/ynoa-uploader:latest
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+
+          envFrom:
+            - secretRef:
+                name: uploader-s3-credentials

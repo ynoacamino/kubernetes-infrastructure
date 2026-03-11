@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: uploader
+  namespace: prod
+  labels:
+    app: uploader
+
+spec:
+  type: ClusterIP
+  selector:
+    app: uploader
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+      protocol: TCP

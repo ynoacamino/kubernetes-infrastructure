@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: uploader
+  namespace: prod
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+
+spec:
+  tls:
+    - hosts:
+        - uploader-kube.ynoacamino.me
+      secretName: uploader-tls
+
+  rules:
+    - host: uploader-kube.ynoacamino.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: uploader
+                port:
+                  number: 80
