@@ -3,7 +3,7 @@ kind: LimitRange
 
 metadata:
   name: dev-limit-range
-  namescape: dev
+  namespace: dev
 
 spec:
   limits:
