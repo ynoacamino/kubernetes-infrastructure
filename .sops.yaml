@@ -1,5 +1,5 @@
 creation_rules:
-  - path_regex: secrets/*\.yaml
+  - path_regex: (secrets/.*\.yaml$|.*/secret(\.enc)?\.yaml$)
     encrypted_regex: "^(data|stringData)$"
     key_groups:
       - age:
