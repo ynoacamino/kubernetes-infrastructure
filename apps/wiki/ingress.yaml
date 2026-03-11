@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: wiki
+  namespace: prod
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+
+spec:
+  tls:
+    - hosts:
+        - wiki-kube.ynoacamino.me
+      secretName: wiki-tls
+
+  rules:
+    - host: wiki-kube.ynoacamino.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wiki-service
+                port:
+                  number: 80

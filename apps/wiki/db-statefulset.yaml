@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+
+metadata:
+  name: wiki-db
+  namespace: prod
+  labels:
+    app: wiki-db
+
+spec:
+  serviceName: wiki-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wiki-db
+  template:
+    metadata:
+      labels:
+        app: wiki-db
+    spec:
+      containers:
+        - name: wiki-db
+          image: postgres:16
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: wiki-db-credentials
+                  key: DB_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: wiki-db-credentials
+                  key: DB_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: wiki-db-credentials
+                  key: DB_NAME
+          volumeMounts:
+            - name: wiki-db-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: wiki-db-storage
+          persistentVolumeClaim:
+            claimName: wiki-db-pvc
