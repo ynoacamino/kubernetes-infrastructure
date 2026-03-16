@@ -1,52 +1,43 @@
 nameOverride: "monitoring"
-
 namespaceOverride: "monitoring"
 
 kubeStateMetrics:
   enabled: false
 
 defaultRules:
-  rules:
-    kubeStateMetrics: false
+  create: false
 
 grafana:
+  enabled: true
   defaultDashboardsEnabled: false
   service:
     type: ClusterIP
-
   persistence:
     enabled: true
-    size: 5Gi
+    size: 2Gi
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 50m
+      memory: 128Mi
     limits:
-      cpu: 300m
-      memory: 512Mi
+      cpu: 150m
+      memory: 256Mi
 
 alertmanager:
-  alertmanagerSpec:
+  enabled: false
+
+prometheus:
+  enabled: true
+  prometheusSpec:
     replicas: 1
+    retention: 1d
     resources:
       requests:
         cpu: 100m
-        memory: 128Mi
+        memory: 300Mi
       limits:
         cpu: 200m
-        memory: 256Mi
-
-prometheus:
-  prometheusSpec:
-    replicas: 1
-    retention: 7d
-    resources:
-      requests:
-        cpu: 150m
-        memory: 400Mi
-      limits:
-        cpu: 400m
-        memory: 800Mi
+        memory: 600Mi
     storageSpec:
       volumeClaimTemplate:
         spec:
@@ -54,16 +45,34 @@ prometheus:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 10Gi
-
-kube-state-metrics:
-  enabled: false
+              storage: 5Gi
 
 prometheus-node-exporter:
+  enabled: true
   resources:
     requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
       cpu: 50m
       memory: 64Mi
-    limits:
-      cpu: 150m
-      memory: 128Mi
+  extraArgs:
+    - --no-collector.filesystem
+    - --no-collector.netdev
+    - --no-collector.mdadm
+    - --no-collector.bonding
+    - --no-collector.hwmon
+    - --no-collector.ipvs
+    - --no-collector.nfs
+    - --no-collector.sockstat
+    - --no-collector.timex
+  kubeRBACProxy:
+    enabled: false
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+  serviceMonitor:
+    interval: 30s
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}

@@ -36,20 +36,20 @@ releases:
     values:
       - helm/external-dns/values.yaml
 
-  - name: netdata
-    namespace: netdata
-    createNamespace: true
-    chart: netdata/netdata
-    version: 3.7.160
-    values:
-      - helm/netdata/values.yaml
-
-  # - name: kube-prometheus-stack
-  #   namespace: monitoring
-  #   chart: prometheus-community/kube-prometheus-stack
-  #   version: 82.10.4
+  # - name: netdata
+  #   namespace: netdata
+  #   createNamespace: true
+  #   chart: netdata/netdata
+  #   version: 3.7.160
   #   values:
-  #     - helm/monitoring/values.yaml
+  #     - helm/netdata/values.yaml
+
+  - name: kube-prometheus-stack
+    namespace: monitoring
+    chart: prometheus-community/kube-prometheus-stack
+    version: 82.10.4
+    values:
+      - helm/monitoring/values.yaml
 
   # - name: longhorn
   #   namespace: longhorn-system
