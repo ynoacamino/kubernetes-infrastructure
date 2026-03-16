@@ -1,0 +1,9 @@
+defaultSettings:
+  defaultDataPath: /var/lib/longhorn
+
+persistence:
+  defaultClassReplicaCount: 2
+
+service:
+  ui:
+    type: ClusterIP
