@@ -1,0 +1,69 @@
+nameOverride: "monitoring"
+
+namespaceOverride: "monitoring"
+
+kubeStateMetrics:
+  enabled: false
+
+defaultRules:
+  rules:
+    kubeStateMetrics: false
+
+grafana:
+  defaultDashboardsEnabled: false
+  service:
+    type: ClusterIP
+
+  persistence:
+    enabled: true
+    size: 5Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 300m
+      memory: 512Mi
+
+alertmanager:
+  alertmanagerSpec:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+
+prometheus:
+  prometheusSpec:
+    replicas: 1
+    retention: 7d
+    resources:
+      requests:
+        cpu: 150m
+        memory: 400Mi
+      limits:
+        cpu: 400m
+        memory: 800Mi
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Gi
+
+kube-state-metrics:
+  enabled: false
+
+prometheus-node-exporter:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 150m
+      memory: 128Mi
