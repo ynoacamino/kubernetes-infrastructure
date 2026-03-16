@@ -2,4 +2,4 @@ crds:
   enabled: true
   keep: true
 
-replicaCount: 2
+replicaCount: 1
