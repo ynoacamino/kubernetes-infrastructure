@@ -8,7 +8,7 @@ metadata:
     app: uploader
 
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: uploader
@@ -17,6 +17,14 @@ spec:
       labels:
         app: uploader
     spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: uploader
+
       containers:
         - name: uploader
           image: ynoacamino/ynoa-uploader:latest
