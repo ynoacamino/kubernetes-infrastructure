@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: cms
+  namespace: prod
+  labels:
+    app: cms
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cms
+  template:
+    metadata:
+      labels:
+        app: cms
+    spec:
+      securityContext:
+        runAsUser: 0
+        fsGroup: 0
+
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: cms
+
+      containers:
+        - name: cms
+          image: directus/directus:11.10.0
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 8055
+              protocol: TCP
+
+          envFrom:
+            - secretRef:
+                name: cms-secrets
+
+          volumeMounts:
+            - name: cms-data-vol
+              mountPath: /directus/data
+
+      volumes:
+        - name: cms-data-vol
+          persistentVolumeClaim:
+            claimName: cms-data
