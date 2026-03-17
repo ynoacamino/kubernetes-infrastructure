@@ -1,9 +1,16 @@
-defaultSettings:
-  defaultDataPath: /var/lib/longhorn
-
 persistence:
+  defaultClass: false
   defaultClassReplicaCount: 2
+  defaultDataLocality: best-effort
 
-service:
-  ui:
+defaultSettings:
+  replicaAutoBalance: "least-effort"
+
+metrics:
+  serviceMonitor:
+    enabled: false
+
+longhornUI:
+  replicas: 1
+  service:
     type: ClusterIP

@@ -1,7 +1,7 @@
 helmDefaults:
   wait: true
   createNamespace: true
-  atomic: true
+  timeout: 600
 
 repositories:
   - name: jetstack
@@ -51,9 +51,9 @@ releases:
     values:
       - helm/monitoring/values.yaml
 
-  # - name: longhorn
-  #   namespace: longhorn-system
-  #   chart: longhorn/longhorn
-  #   version: 1.11.1
-  #   values:
-  #     - helm/longhorn/values.yaml
+  - name: longhorn
+    namespace: longhorn-system
+    chart: longhorn/longhorn
+    version: 1.11.1
+    values:
+      - helm/longhorn/values.yaml
