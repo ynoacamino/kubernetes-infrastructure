@@ -1,11 +1,35 @@
 nameOverride: "monitoring"
 namespaceOverride: "monitoring"
 
+windowsMonitoring:
+  enabled: false
+
 kubeStateMetrics:
   enabled: false
 
 defaultRules:
   create: false
+
+kubeEtcd:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+alertmanager:
+  enabled: false
+
+kubeApiServer:
+  enabled: false
+
+kubelet:
+  enabled: false
+
+coreDns:
+  enabled: false
 
 grafana:
   enabled: true
@@ -15,6 +39,8 @@ grafana:
   persistence:
     enabled: true
     existingClaim: grafana-pvc
+  securityContext:
+    fsGroup: 472
   resources:
     requests:
       cpu: 80m
@@ -23,21 +49,23 @@ grafana:
       cpu: 100m
       memory: 200Mi
 
-alertmanager:
-  enabled: false
-
 prometheus:
   enabled: true
   prometheusSpec:
     replicas: 1
-    retention: 1d
+    retention: 12h
+    scrapeInterval: 30s
+    additionalArgs:
+      - name: web.enable-lifecycle
+        value: ""
+    maximumStartupDurationSeconds: 300
     resources:
       requests:
         cpu: 80m
         memory: 100Mi
       limits:
         cpu: 100m
-        memory: 200Mi
+        memory: 280Mi
     storageSpec:
       volumeClaimTemplate:
         spec:
@@ -73,6 +101,9 @@ prometheus-node-exporter:
     runAsUser: 65534
   serviceMonitor:
     interval: 30s
+    relabelings:
+      - sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: node
   nodeSelector: {}
   tolerations: []
   affinity: {}

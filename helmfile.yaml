@@ -1,7 +1,5 @@
 helmDefaults:
-  wait: true
   createNamespace: true
-  timeout: 600
 
 repositories:
   - name: jetstack
@@ -35,14 +33,6 @@ releases:
     version: 1.20.0
     values:
       - helm/external-dns/values.yaml
-
-  # - name: netdata
-  #   namespace: netdata
-  #   createNamespace: true
-  #   chart: netdata/netdata
-  #   version: 3.7.160
-  #   values:
-  #     - helm/netdata/values.yaml
 
   - name: kube-prometheus-stack
     namespace: monitoring
