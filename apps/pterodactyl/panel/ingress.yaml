@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pterodactyl-panel
+  namespace: prod
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - hosts:
+        - dashboard-kube.ynoacamino.me
+      secretName: pterodactyl-tls
+  rules:
+    - host: dashboard-kube.ynoacamino.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pterodactyl-panel
+                port:
+                  number: 80

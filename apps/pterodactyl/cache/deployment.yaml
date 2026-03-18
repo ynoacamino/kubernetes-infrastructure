@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: pterodactyl-cache
+  namespace: prod
+  labels:
+    app: pterodactyl-cache
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pterodactyl-cache
+  template:
+    metadata:
+      labels:
+        app: pterodactyl-cache
+    spec:
+      containers:
+        - name: redis
+          image: redis:alpine
+          ports:
+            - containerPort: 6379
+              name: redis

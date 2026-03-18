@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pterodactyl-db
+  namespace: prod
+  labels:
+    app: pterodactyl-db
+spec:
+  serviceName: "pterodactyl-db"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pterodactyl-db
+  template:
+    metadata:
+      labels:
+        app: pterodactyl-db
+    spec:
+      securityContext:
+        fsGroup: 999
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          securityContext:
+            runAsUser: 999
+          args: ["--default-authentication-plugin=mysql_native_password"]
+          envFrom:
+            - secretRef:
+                name: pterodactyl-db-secrets
+          env:
+            - name: MYSQL_DATABASE
+              value: "panel"
+            - name: MYSQL_USER
+              value: "pterodactyl"
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+              subPath: data
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: pterodactyl-db
