@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-ente
+  namespace: prod
+  labels:
+    app: postgres-ente
+spec:
+  serviceName: "postgres-ente"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-ente
+  template:
+    metadata:
+      labels:
+        app: postgres-ente
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          envFrom:
+            - secretRef:
+                name: postgres-ente-secrets
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+          resources:
+            requests:
+              cpu: 10m
+              memory: 40Mi
+            limits:
+              cpu: 15m
+              memory: 64Mi
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-ente-pvc

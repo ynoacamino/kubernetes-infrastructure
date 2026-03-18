@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-ente
+  namespace: prod
+  labels:
+    app: server-ente
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-ente
+  template:
+    metadata:
+      labels:
+        app: server-ente
+    spec:
+      containers:
+        - name: server-ente
+          image: ghcr.io/ente-io/server
+          env:
+            - name: ENTE_CREDENTIALS_FILE
+              value: "/credentials.yaml"
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: config
+              mountPath: /museum.yaml
+              subPath: museum.yaml
+              readOnly: true
+            - name: credentials
+              mountPath: /credentials.yaml
+              subPath: credentials.yaml
+              readOnly: true
+          resources:
+            requests:
+              cpu: 10m
+              memory: 40Mi
+            limits:
+              cpu: 15m
+              memory: 64Mi
+      volumes:
+        - name: config
+          secret:
+            secretName: server-ente-secrets
+            items:
+              - key: museum.yaml
+                path: museum.yaml
+        - name: credentials
+          secret:
+            secretName: server-ente-secrets
+            items:
+              - key: credentials.yaml
+                path: credentials.yaml
