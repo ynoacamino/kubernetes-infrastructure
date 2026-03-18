@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vpn
+  namespace: prod
+spec:
+  type: ClusterIP
+  selector:
+    app: vpn
+  ports:
+    - name: ui
+      port: 80
+      targetPort: 51821
+      protocol: TCP

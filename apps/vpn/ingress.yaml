@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vpn
+  namespace: prod
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - hosts:
+        - vpn-kube.ynoacamino.me
+      secretName: vpn-kube-tls
+  rules:
+    - host: vpn-kube.ynoacamino.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vpn
+                port:
+                  number: 80

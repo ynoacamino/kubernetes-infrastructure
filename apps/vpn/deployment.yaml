@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpn
+  namespace: prod
+  labels:
+    app: vpn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vpn
+  template:
+    metadata:
+      labels:
+        app: vpn
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: nyc3-node-1
+      containers:
+        - name: vpn
+          image: ghcr.io/wg-easy/wg-easy
+          env:
+            - name: WG_PORT
+              value: "51820"
+            - name: UI_PORT
+              value: "51821"
+          envFrom:
+            - secretRef:
+                name: vpn-secrets
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - SYS_MODULE
+          ports:
+            - containerPort: 51820
+              hostPort: 51820
+              protocol: UDP
+            - containerPort: 51821
+              protocol: TCP
+          volumeMounts:
+            - name: vpn-configs
+              mountPath: /etc/wireguard
+      volumes:
+        - name: vpn-configs
+          persistentVolumeClaim:
+            claimName: vpn-configs
