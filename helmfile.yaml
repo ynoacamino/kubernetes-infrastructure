@@ -8,10 +8,6 @@ repositories:
   - name: external-dns
     url: https://kubernetes-sigs.github.io/external-dns
 
-  - name: longhorn
-    url: https://charts.longhorn.io
-
-
 releases:
   - name: cert-manager
     namespace: cert-manager
@@ -28,10 +24,3 @@ releases:
     version: 1.20.0
     values:
       - helm/external-dns/values.yaml
-
-  - name: longhorn
-    namespace: longhorn-system
-    chart: longhorn/longhorn
-    version: 1.11.1
-    values:
-      - helm/longhorn/values.yaml
