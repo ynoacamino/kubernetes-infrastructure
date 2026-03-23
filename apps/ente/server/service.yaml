@@ -1,10 +1,12 @@
 apiVersion: v1
 kind: Service
+
 metadata:
   name: server-ente
-  namespace: prod
+  namespace: ynoacamino
   labels:
     app: server-ente
+
 spec:
   selector:
     app: server-ente

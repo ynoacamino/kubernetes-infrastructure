@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres-ente
-  namespace: prod
+  namespace: ynoacamino
   labels:
     app: postgres-ente
 spec:
@@ -16,6 +16,9 @@ spec:
       labels:
         app: postgres-ente
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: ynoacamino-instance
+
       containers:
         - name: postgres
           image: postgres:15

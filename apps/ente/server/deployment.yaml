@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: server-ente
-  namespace: prod
+  namespace: ynoacamino
   labels:
     app: server-ente
 spec:
@@ -15,6 +15,9 @@ spec:
       labels:
         app: server-ente
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: ynoacamino-instance
+
       containers:
         - name: server-ente
           image: ghcr.io/ente-io/server
