@@ -4,15 +4,15 @@ metadata:
   name: vpn
   namespace: ynoacamino
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    cert-manager.io/cluster-issuer: "letsencrypt"
     traefik.ingress.kubernetes.io/redirect-entry-point: https
 spec:
   tls:
     - hosts:
-        - vpn-kube.ynoacamino.me
+        - vpn.ynoacamino.me
       secretName: vpn-kube-tls
   rules:
-    - host: vpn-kube.ynoacamino.me
+    - host: vpn.ynoacamino.me
       http:
         paths:
           - path: /
