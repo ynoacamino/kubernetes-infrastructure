@@ -5,17 +5,17 @@ metadata:
   name: uploader
   namespace: ynoacamino
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    cert-manager.io/cluster-issuer: "letsencrypt"
     traefik.ingress.kubernetes.io/redirect-entry-point: https
 
 spec:
   tls:
     - hosts:
-        - uploader-kube.ynoacamino.me
+        - uploader.ynoacamino.me
       secretName: uploader-tls
 
   rules:
-    - host: uploader-kube.ynoacamino.me
+    - host: uploader.ynoacamino.me
       http:
         paths:
           - path: /
