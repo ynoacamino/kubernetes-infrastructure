@@ -3,7 +3,7 @@ kind: Deployment
 
 metadata:
   name: uploader
-  namespace: prod
+  namespace: ynoacamino
   labels:
     app: uploader
 
@@ -17,13 +17,8 @@ spec:
       labels:
         app: uploader
     spec:
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: ScheduleAnyway
-          labelSelector:
-            matchLabels:
-              app: uploader
+      nodeSelector:
+        kubernetes.io/hostname: ynoacamino-instance
 
       containers:
         - name: uploader

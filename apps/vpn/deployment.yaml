@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vpn
-  namespace: prod
+  namespace: ynoacamino
   labels:
     app: vpn
 spec:
@@ -16,7 +16,7 @@ spec:
         app: vpn
     spec:
       nodeSelector:
-        kubernetes.io/hostname: nyc3-node-1
+        kubernetes.io/hostname: ynoacamino-instance
       containers:
         - name: vpn
           image: ghcr.io/wg-easy/wg-easy
