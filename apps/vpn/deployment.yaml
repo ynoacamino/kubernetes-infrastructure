@@ -15,6 +15,10 @@ spec:
       labels:
         app: vpn
     spec:
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       nodeSelector:
         kubernetes.io/hostname: ynoacamino-instance
       containers:
