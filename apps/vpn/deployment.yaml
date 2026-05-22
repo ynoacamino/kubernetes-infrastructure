@@ -21,8 +21,6 @@ spec:
         options:
           - name: ndots
             value: "1"
-      nodeSelector:
-        kubernetes.io/hostname: ynoacamino-instance
       containers:
         - name: vpn
           image: ghcr.io/wg-easy/wg-easy

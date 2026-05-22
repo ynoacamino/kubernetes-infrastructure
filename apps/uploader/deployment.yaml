@@ -17,9 +17,6 @@ spec:
       labels:
         app: uploader
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: ynoacamino-instance
-
       containers:
         - name: uploader
           image: ynoacamino/ynoa-uploader:latest

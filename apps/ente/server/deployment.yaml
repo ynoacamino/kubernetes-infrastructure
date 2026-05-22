@@ -15,9 +15,6 @@ spec:
       labels:
         app: server-ente
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: ynoacamino-instance
-
       containers:
         - name: server-ente
           image: ghcr.io/ente-io/server

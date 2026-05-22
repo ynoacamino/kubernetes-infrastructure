@@ -16,9 +16,6 @@ spec:
       labels:
         app: postgres-ente
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: ynoacamino-instance
-
       containers:
         - name: postgres
           image: postgres:15
