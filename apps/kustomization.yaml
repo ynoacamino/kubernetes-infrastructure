@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - pvzge
+  - vpn
+  - uploader
+  - ente
+  - n8n
+
+patches:
+  - path: patches/deployment.yaml
+    target:
+      kind: Deployment
+      namespace: ynoacamino
+  - path: patches/statefulset.yaml
+    target:
+      kind: StatefulSet
+      namespace: ynoacamino
+  - path: patches/deployment.yaml
+    target:
+      kind: Deployment
+      namespace: fluia
+  - path: patches/statefulset.yaml
+    target:
+      kind: StatefulSet
+      namespace: fluia
