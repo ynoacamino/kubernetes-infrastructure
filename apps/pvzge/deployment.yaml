@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: pvzge
+  namespace: ynoacamino
+  labels:
+    app: pvzge
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pvzge
+  template:
+    metadata:
+      labels:
+        app: pvzge
+    spec:
+      containers:
+        - name: pvzge
+          image: gaozih/pvzge:latest
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 80
+              protocol: TCP
