@@ -17,6 +17,11 @@ spec:
       labels:
         app: n8n
     spec:
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
       containers:
         - name: n8n
           image: n8nio/n8n:latest
