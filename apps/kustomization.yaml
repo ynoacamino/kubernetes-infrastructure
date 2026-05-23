@@ -7,6 +7,7 @@ resources:
   - uploader
   - ente
   - n8n
+  - evoapi
 
 patches:
   - path: patches/deployment.yaml

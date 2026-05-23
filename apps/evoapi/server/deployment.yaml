@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: evoapi
+  namespace: fluia
+  labels:
+    app: evoapi
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: evoapi
+  template:
+    metadata:
+      labels:
+        app: evoapi
+    spec:
+      containers:
+        - name: evoapi
+          image: evoapicloud/evolution-api:v2.3.7
+          env:
+            - name: SERVER_TYPE
+              value: http
+          envFrom:
+            - configMapRef:
+                name: evoapi-config
+            - secretRef:
+                name: evoapi-secrets
+          ports:
+            - name: http
+              containerPort: 8080
+          volumeMounts:
+            - name: instances
+              mountPath: /evolution/instances
+      volumes:
+        - name: instances
+          persistentVolumeClaim:
+            claimName: evoapi-instances

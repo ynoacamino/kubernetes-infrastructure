@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+
+metadata:
+  name: evoapi-storage
+  namespace: fluia
+  labels:
+    app: evoapi-storage
+
+spec:
+  serviceName: evoapi-storage
+  replicas: 1
+  selector:
+    matchLabels:
+      app: evoapi-storage
+  template:
+    metadata:
+      labels:
+        app: evoapi-storage
+    spec:
+      containers:
+        - name: seaweedfs
+          image: chrislusf/seaweedfs:4.28
+
+          args:
+            - mini
+            - -dir=/data
+
+          ports:
+            - name: seaweedfs-s3
+              containerPort: 8333
+
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: evoapi-secrets
+                  key: S3_ACCESS_KEY
+
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: evoapi-secrets
+                  key: S3_SECRET_KEY
+
+            - name: S3_BUCKET
+              value: evoapi
+
+          volumeMounts:
+            - name: evoapi-storage
+              mountPath: /data
+      volumes:
+        - name: evoapi-storage
+          persistentVolumeClaim:
+            claimName: evoapi-storage
+  updateStrategy:
+    type: RollingUpdate
