@@ -31,8 +31,12 @@ spec:
             - secretRef:
                 name: n8n-secrets
 
+          volumeMounts:
+            - name: n8n-pvc
+              mountPath: /home/node/.n8n
+
           ports:
-            - containerPort: 5678
+            - containerPort: 443
               protocol: TCP
       volumes:
         - name: n8n-pvc
