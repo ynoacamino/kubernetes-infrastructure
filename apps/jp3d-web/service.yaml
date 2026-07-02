@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: jp3d-web
+  namespace: ynoacamino
+  labels:
+    app: jp3d-web
+
+spec:
+  type: ClusterIP
+  selector:
+    app: jp3d-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+      protocol: TCP

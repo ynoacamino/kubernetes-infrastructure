@@ -8,7 +8,9 @@ resources:
   # - ente
   # - n8n
   # - evoapi
-  - nextcrm
+  # - nextcrm
+  - jp3d-web
+  # - evoapi
 
 patches:
   - path: patches/deployment.yaml
