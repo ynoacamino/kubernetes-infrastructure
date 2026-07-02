@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+
+metadata:
+  name: evoapi-db
+  namespace: fluia
+  labels:
+    app: evoapi-db
+
+spec:
+  serviceName: evoapi-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: evoapi-db
+  template:
+    metadata:
+      labels:
+        app: evoapi-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          args:
+            - postgres
+            - -c
+            - max_connections=1000
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: evoapi-secrets
+                  key: DATABASE_PASSWORD
+          ports:
+            - name: postgres
+              containerPort: 5432
+          volumeMounts:
+            - name: db-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: evoapi-db-data
+  updateStrategy:
+    type: RollingUpdate

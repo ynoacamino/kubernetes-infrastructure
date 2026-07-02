@@ -8,6 +8,7 @@ resources:
   # - ente
   # - n8n
   - jp3d-web
+  # - evoapi
 
 patches:
   - path: patches/deployment.yaml

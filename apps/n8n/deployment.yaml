@@ -17,6 +17,11 @@ spec:
       labels:
         app: n8n
     spec:
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
       containers:
         - name: n8n
           image: n8nio/n8n:latest
@@ -26,8 +31,12 @@ spec:
             - secretRef:
                 name: n8n-secrets
 
+          volumeMounts:
+            - name: n8n-pvc
+              mountPath: /home/node/.n8n
+
           ports:
-            - containerPort: 5678
+            - containerPort: 443
               protocol: TCP
       volumes:
         - name: n8n-pvc
