@@ -10,6 +10,7 @@ resources:
   # - evoapi
   # - nextcrm
   - jp3d-web
+  - hygacon-web
   # - evoapi
 
 patches:

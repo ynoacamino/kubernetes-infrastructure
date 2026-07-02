@@ -25,7 +25,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: hygacon-web
-          image: ghcr.io/jp3d-code/hygacon-website:latest
+          image: ghcr.io/jp3d-code/hygacon-website:v0.4
           imagePullPolicy: Always
 
           envFrom:

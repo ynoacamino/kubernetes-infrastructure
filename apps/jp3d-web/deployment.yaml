@@ -25,7 +25,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: jp3d-web
-          image: ghcr.io/jp3d-code/website:v0.2
+          image: ghcr.io/jp3d-code/website:v0.3
           imagePullPolicy: Always
 
           envFrom:
