@@ -7,7 +7,10 @@ resources:
   # - uploader
   # - ente
   # - n8n
+  # - evoapi
+  # - nextcrm
   - jp3d-web
+  - hygacon-web
   # - evoapi
 
 patches:

@@ -2,15 +2,12 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 
 metadata:
-  name: jp3d-web-pvc-media
+  name: nextcrm-storage
   namespace: ynoacamino
 
 spec:
   accessModes:
     - ReadWriteOnce
-
-  storageClassName: local-path
-
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi

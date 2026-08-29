@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 
 metadata:
-  name: jp3d-web-pvc-media
+  name: hygacon-web-pvc-media
   namespace: ynoacamino
 
 spec:
