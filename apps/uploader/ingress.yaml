@@ -11,11 +11,11 @@ metadata:
 spec:
   tls:
     - hosts:
-        - uploader.ynoacamino.me
+        - uploader.ynoacamino.tech
       secretName: uploader-tls
 
   rules:
-    - host: uploader.ynoacamino.me
+    - host: uploader.ynoacamino.tech
       http:
         paths:
           - path: /

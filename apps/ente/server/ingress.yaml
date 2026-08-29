@@ -11,10 +11,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - ente.ynoacamino.me
+        - ente.ynoacamino.tech
       secretName: ente-tls
   rules:
-    - host: ente.ynoacamino.me
+    - host: ente.ynoacamino.tech
       http:
         paths:
           - path: /

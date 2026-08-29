@@ -3,6 +3,7 @@ provider:
 
 domainFilters:
   - ynoacamino.me
+  - ynoacamino.tech
 
 txtOwnerId: kubernetes-cluster
 
