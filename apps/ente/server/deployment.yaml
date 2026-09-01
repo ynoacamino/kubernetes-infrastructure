@@ -7,6 +7,7 @@ metadata:
     app: server-ente
 spec:
   replicas: 1
+
   selector:
     matchLabels:
       app: server-ente
@@ -15,6 +16,11 @@ spec:
       labels:
         app: server-ente
     spec:
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '1'
+
       containers:
         - name: server-ente
           image: ghcr.io/ente-io/server
