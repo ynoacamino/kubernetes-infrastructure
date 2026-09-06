@@ -6,19 +6,7 @@ resources:
   - ente
 
 patches:
-  - path: patches/deployment.yaml
-    target:
-      kind: Deployment
-      namespace: ynoacamino
   - path: patches/statefulset.yaml
     target:
       kind: StatefulSet
       namespace: ynoacamino
-  - path: patches/deployment.yaml
-    target:
-      kind: Deployment
-      namespace: fluia
-  - path: patches/statefulset.yaml
-    target:
-      kind: StatefulSet
-      namespace: fluia
