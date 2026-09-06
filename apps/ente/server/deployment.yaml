@@ -23,7 +23,7 @@ spec:
 
       containers:
         - name: server-ente
-          image: ghcr.io/ente-io/server
+          image: ghcr.io/ente/server
           env:
             - name: ENTE_CREDENTIALS_FILE
               value: "/credentials.yaml"
